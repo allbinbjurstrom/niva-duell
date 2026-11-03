@@ -1,11 +1,11 @@
-## Nivå Duell 0.2.4 — testversion
+## Nivå Duell 0.2.5 — testversion
 
 Ladda ner rätt fil under **Assets**. Ingen Node-installation eller inloggning behövs.
 
 | Dator | Ladda ner |
 | --- | --- |
-| Mac med Apple-chip | **Niva-Duell-0.2.4-Mac-arm64.zip** |
-| Mac med Intel | **Niva-Duell-0.2.4-Mac-x64.zip** |
+| Mac med Apple-chip | **Niva-Duell-0.2.5-Mac-arm64.zip** |
+| Mac med Intel | **Niva-Duell-0.2.5-Mac-x64.zip** |
 
 På Mac packar du upp och flyttar appen till Program. Testversionen saknar köpta utgivarcertifikat, så operativsystemet kan visa en varning vid första öppningen. [Installationshjälp och kontroller](https://github.com/allbinbjurstrom/niva-duell#ladda-ner-och-testa).
 

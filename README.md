@@ -8,8 +8,8 @@ Ett fristående FPS-test för Mac, med enkel grafik, Vandal-demo och kunskapsdue
 
 | Dator | Fil |
 | --- | --- |
-| Mac med Apple-chip, M1 eller senare | `Niva-Duell-0.2.4-Mac-arm64.zip` |
-| Mac med Intel | `Niva-Duell-0.2.4-Mac-x64.zip` |
+| Mac med Apple-chip, M1 eller senare | `Niva-Duell-0.2.5-Mac-arm64.zip` |
+| Mac med Intel | `Niva-Duell-0.2.5-Mac-x64.zip` |
 
 På Mac packar du upp ZIP-filen, drar **Niva Duell.app** till **Program** och öppnar den därifrån. Detta är en testrelease utan köpta utgivarcertifikat: macOS kan kräva **Systeminställningar → Integritet och säkerhet → Öppna ändå** vid första öppningen. Kontrollera att filen kommer från repot ovan.
 
