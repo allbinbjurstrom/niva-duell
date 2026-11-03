@@ -1,0 +1,16 @@
+node_modules/
+dist/
+release/
+desktop-assets/papers/
+.npm-cache/
+.runtime/
+.vite/
+output/
+test-results/
+*.log
+.DS_Store
+.env*
+*.pem
+*.key
+*.p12
+*.pfx

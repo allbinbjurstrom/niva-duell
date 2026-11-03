@@ -1,0 +1,13 @@
+export type Body={x:number;y:number;z:number;vx:number;vz:number;gaitPhase?:number;vy:number;yaw:number;pitch:number;health:number;shield:number;crouch:boolean;walk?:boolean;aim?:boolean;grounded:boolean;jumpHeld:boolean;landPenalty:number;tagged:boolean;seq:number};
+export type Input={seq:number;forward:number;strafe:number;yaw:number;pitch:number;walk:boolean;crouch:boolean;jump:boolean;fire:boolean;aim:boolean;altFire:boolean;active:boolean;epoch:number;viewTime:number;viewFromId:number;viewToId:number;ownSeq:number;ownAlpha:number;triggerViewTime:number;triggerFromId:number;triggerToId:number;triggerOwnSeq:number;triggerOwnAlpha:number;triggerYaw:number;triggerPitch:number;triggerAim:boolean;triggerZoomLevel:number;firePress:number;altPress:number;zoomLevel:number};
+export type Member={id:string;name:string;bot:boolean;connected:boolean;withdrawn:boolean;progress:number;complete:boolean;stats:{wins:number;rounds:number;kills:number;deaths:number}};
+export type Shot={id:number;volleyId:number;shotSerial:number;inputSeq:number;at:number;kind:'shot';shooterId:string;weapon:string;origin:number[];end:number[];targetId:string|null;zone:number|null;killed?:boolean};
+export type Question={id:string;section:string;number:number;pages:number[];paperId:string;title:string;sourceUrl:string;options:string[];testMode?:boolean;prompt?:string;optionLabels?:Record<string,string>};
+export type State={type:'state';protocol:number;now:number;
+  party:{code:string;hostId:string;section:string;testMode:boolean;demoMode:'vandal'|null;demoDrill:'target'|'wall';demoTargetMoving:boolean;phase:'lobby'|'training'|'matches'|'finished';wave:number;waves:number;waveEndsAt:number;notice:string;members:Member[];matches:{id:string;players:string[];score:Record<string,number>;phase:string;winnerId:string|null}[]};
+  self:{id:string;name:string;body:Body|null;previousBody:Body|null;motionEpoch:number;motionStale:boolean;budget:number;credits:number;weapon:string;activeWeapon:string;armor:string;ready:boolean;slot:number;ammo:number;reserve:number;reloadAt:number;equipUntil:number;recoilPitch:number;recoilYaw:number;lastShot:number;shotCount:number;shotSerial:number;questionIndex:number;trainingComplete:boolean;correct:number;
+    feedback:{questionId:string;chosen:string;correct:boolean;answer:string;earned:number}|null;question:Question|null};
+  duel:{id:string;phase:'buy'|'countdown'|'live'|'result'|'finished';score:Record<string,number>;round:number;endsAt:number;winnerId:string|null;roundWinner:string|null;reason:string;events:Shot[];
+    opponent:{id:string;poseId:number;name:string;connected:boolean;ready:boolean;body:Body|null;weapon:string}|null}|null;
+};
+export type Credential={token:string;playerId:string;code:string};

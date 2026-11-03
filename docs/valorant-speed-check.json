@@ -1,0 +1,167 @@
+{
+  "date": "2026-11-03",
+  "version": "0.1.5",
+  "protocol": 4,
+  "method": "128 Hz integrated movement in an unobstructed map corridor; 10 m timing tolerance is one simulation step. This is a code-level measurement, not a stopwatch measurement in the native UI.",
+  "sources": [
+    {
+      "url": "https://valorant.gs/about/",
+      "kind": "Independent original game-file extraction, build 13.09.00.5777412 (2026-10-28)"
+    },
+    {
+      "url": "https://valorant-api.com/v1/weapons",
+      "kind": "Independent game-content API; weapon run factors 0.80, 0.85 and 0.76"
+    },
+    {
+      "url": "https://github.com/yakisoba0728/vrfkit/blob/main/docs/DATA.md",
+      "kind": "Original replay measurements: 675/573.75/540/513 cm/s and rifle walking 324 cm/s"
+    }
+  ],
+  "inference": "Rifle walking 3.24 / rifle running 5.4 gives 0.60. The prototype applies this walk factor consistently to all its weapons. Crouch factor 0.325 remains a calibration, not independently confirmed for every weapon.",
+  "rows": [
+    {
+      "weapon": "classic",
+      "mode": "run",
+      "referenceMetersPerSecond": 5.7375,
+      "integratedOneSecondMeters": 5.737500000000007,
+      "referenceTenMetersSeconds": 1.7429193899782136,
+      "integratedTenMetersSeconds": 1.75
+    },
+    {
+      "weapon": "classic",
+      "mode": "walk",
+      "referenceMetersPerSecond": 3.4425,
+      "integratedOneSecondMeters": 3.4424999999999955,
+      "referenceTenMetersSeconds": 2.904865649963689,
+      "integratedTenMetersSeconds": 2.90625
+    },
+    {
+      "weapon": "ghost",
+      "mode": "run",
+      "referenceMetersPerSecond": 5.7375,
+      "integratedOneSecondMeters": 5.737500000000007,
+      "referenceTenMetersSeconds": 1.7429193899782136,
+      "integratedTenMetersSeconds": 1.75
+    },
+    {
+      "weapon": "ghost",
+      "mode": "walk",
+      "referenceMetersPerSecond": 3.4425,
+      "integratedOneSecondMeters": 3.4424999999999955,
+      "referenceTenMetersSeconds": 2.904865649963689,
+      "integratedTenMetersSeconds": 2.90625
+    },
+    {
+      "weapon": "sheriff",
+      "mode": "run",
+      "referenceMetersPerSecond": 5.4,
+      "integratedOneSecondMeters": 5.399999999999994,
+      "referenceTenMetersSeconds": 1.8518518518518516,
+      "integratedTenMetersSeconds": 1.859375
+    },
+    {
+      "weapon": "sheriff",
+      "mode": "walk",
+      "referenceMetersPerSecond": 3.24,
+      "integratedOneSecondMeters": 3.240000000000008,
+      "referenceTenMetersSeconds": 3.0864197530864197,
+      "integratedTenMetersSeconds": 3.09375
+    },
+    {
+      "weapon": "spectre",
+      "mode": "run",
+      "referenceMetersPerSecond": 5.7375,
+      "integratedOneSecondMeters": 5.737500000000007,
+      "referenceTenMetersSeconds": 1.7429193899782136,
+      "integratedTenMetersSeconds": 1.75
+    },
+    {
+      "weapon": "spectre",
+      "mode": "walk",
+      "referenceMetersPerSecond": 3.4425,
+      "integratedOneSecondMeters": 3.4424999999999955,
+      "referenceTenMetersSeconds": 2.904865649963689,
+      "integratedTenMetersSeconds": 2.90625
+    },
+    {
+      "weapon": "guardian",
+      "mode": "run",
+      "referenceMetersPerSecond": 5.4,
+      "integratedOneSecondMeters": 5.399999999999994,
+      "referenceTenMetersSeconds": 1.8518518518518516,
+      "integratedTenMetersSeconds": 1.859375
+    },
+    {
+      "weapon": "guardian",
+      "mode": "walk",
+      "referenceMetersPerSecond": 3.24,
+      "integratedOneSecondMeters": 3.240000000000008,
+      "referenceTenMetersSeconds": 3.0864197530864197,
+      "integratedTenMetersSeconds": 3.09375
+    },
+    {
+      "weapon": "phantom",
+      "mode": "run",
+      "referenceMetersPerSecond": 5.4,
+      "integratedOneSecondMeters": 5.399999999999994,
+      "referenceTenMetersSeconds": 1.8518518518518516,
+      "integratedTenMetersSeconds": 1.859375
+    },
+    {
+      "weapon": "phantom",
+      "mode": "walk",
+      "referenceMetersPerSecond": 3.24,
+      "integratedOneSecondMeters": 3.240000000000008,
+      "referenceTenMetersSeconds": 3.0864197530864197,
+      "integratedTenMetersSeconds": 3.09375
+    },
+    {
+      "weapon": "vandal",
+      "mode": "run",
+      "referenceMetersPerSecond": 5.4,
+      "integratedOneSecondMeters": 5.399999999999994,
+      "referenceTenMetersSeconds": 1.8518518518518516,
+      "integratedTenMetersSeconds": 1.859375
+    },
+    {
+      "weapon": "vandal",
+      "mode": "walk",
+      "referenceMetersPerSecond": 3.24,
+      "integratedOneSecondMeters": 3.240000000000008,
+      "referenceTenMetersSeconds": 3.0864197530864197,
+      "integratedTenMetersSeconds": 3.09375
+    },
+    {
+      "weapon": "operator",
+      "mode": "run",
+      "referenceMetersPerSecond": 5.13,
+      "integratedOneSecondMeters": 5.129999999999996,
+      "referenceTenMetersSeconds": 1.9493177387914231,
+      "integratedTenMetersSeconds": 1.953125
+    },
+    {
+      "weapon": "operator",
+      "mode": "walk",
+      "referenceMetersPerSecond": 3.078,
+      "integratedOneSecondMeters": 3.0779999999999843,
+      "referenceTenMetersSeconds": 3.2488628979857053,
+      "integratedTenMetersSeconds": 3.25
+    },
+    {
+      "weapon": "knife",
+      "mode": "run",
+      "referenceMetersPerSecond": 6.75,
+      "integratedOneSecondMeters": 6.75,
+      "referenceTenMetersSeconds": 1.4814814814814814,
+      "integratedTenMetersSeconds": 1.484375
+    },
+    {
+      "weapon": "knife",
+      "mode": "walk",
+      "referenceMetersPerSecond": 4.05,
+      "integratedOneSecondMeters": 4.050000000000008,
+      "referenceTenMetersSeconds": 2.469135802469136,
+      "integratedTenMetersSeconds": 2.4765625
+    }
+  ]
+}

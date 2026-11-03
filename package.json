@@ -1,0 +1,83 @@
+{
+  "name": "niva-duell",
+  "version": "0.2.4",
+  "private": true,
+  "type": "module",
+  "main": "desktop/main.cjs",
+  "description": "Nivå Duell — Vandal-demo och kunskapsdueller för Mac på samma nätverk",
+  "author": "Nivå",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "node scripts/prepare-notices.mjs && tsc --noEmit && vite build",
+    "start": "node server/index.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "papers:prepare": "node scripts/prepare-papers.mjs",
+    "app": "electron .",
+    "mac:package": "npm run papers:prepare && npm run build && electron-builder --mac zip --arm64 --x64 --publish never"
+  },
+  "dependencies": {
+    "ws": "8.18.3"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/three": "0.186.0",
+    "electron": "44.7.0",
+    "electron-builder": "26.15.3",
+    "typescript": "7.0.2",
+    "vite": "8.3.3",
+    "pdfjs-dist": "6.4.299",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "three": "0.186.1"
+  },
+  "build": {
+    "appId": "se.niva.duell",
+    "productName": "Niva Duell",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "server/**/*",
+      "shared/**/*",
+      "desktop/**/*",
+      "desktop-assets/papers/*.pdf",
+      "package.json",
+      "build/icon.png"
+    ],
+    "extraResources": [
+      {
+        "from": "content/local-practice-sources.json",
+        "to": "practice-sources.json"
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.games",
+      "identity": "-",
+      "icon": "build/icon.icns",
+      "extendInfo": {
+        "NSLocalNetworkUsageDescription": "Nivå Duell söker efter och ansluter till dina vänners partyn på samma lokala nätverk.",
+        "CFBundleDisplayName": "Nivå Duell"
+      },
+      "artifactName": "Niva-Duell-${version}-Mac-${arch}.${ext}"
+    },
+    "artifactName": "Niva-Duell-${version}-${os}-${arch}.${ext}",
+    "npmRebuild": false,
+    "electronVersion": "44.7.0",
+    "publish": null
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allbinbjurstrom/niva-duell.git"
+  },
+  "homepage": "https://github.com/allbinbjurstrom/niva-duell",
+  "bugs": {
+    "url": "https://github.com/allbinbjurstrom/niva-duell/issues"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

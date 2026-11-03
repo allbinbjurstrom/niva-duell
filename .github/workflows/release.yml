@@ -1,0 +1,70 @@
+name: Test and package
+
+on:
+  push:
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: package-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  package:
+    name: Test and build Mac
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Check release version
+        run: node scripts/check-version.mjs
+      - run: npm test
+      - name: Build applications
+        run: npm run mac:package
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - name: Verify packaged source and original papers
+        run: node scripts/verify-packages.mjs
+      - name: Start packaged application and test its server
+        run: node scripts/smoke-packaged.mjs
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: Niva-Duell-Mac
+          path: release/*.zip
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    name: Prepare downloadable test release
+    needs: package
+    if: github.event_name == 'push' && github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: Niva-Duell-*
+          path: release-assets
+          merge-multiple: true
+      - name: Create draft and upload verified applications
+        run: node scripts/publish-release.mjs release-assets
+        env:
+          GH_TOKEN: ${{ github.token }}
