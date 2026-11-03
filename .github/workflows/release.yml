@@ -37,6 +37,7 @@ jobs:
       - name: Verify packaged source and original papers
         run: node scripts/verify-packages.mjs
       - name: Start packaged application and test its server
+        timeout-minutes: 2
         run: node scripts/smoke-packaged.mjs
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

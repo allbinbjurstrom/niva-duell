@@ -1,5 +1,5 @@
 // CI startup/transport check. Interactive keyboard/mouse QA is a separate test.
-import {spawn,execFile} from 'node:child_process';
+import {spawn} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import assert from 'node:assert/strict';
@@ -8,10 +8,18 @@ import {RULES} from '../shared/rules.mjs';
 
 const root=fileURLToPath(new URL('..',import.meta.url));
 const executable=process.platform==='win32'?path.join(root,'release/win-unpacked/Niva Duell.exe'):path.join(root,`release/${process.arch==='arm64'?'mac-arm64':'mac'}/Niva Duell.app/Contents/MacOS/Niva Duell`);
-const child=spawn(executable,['--disable-gpu'],{stdio:['ignore','pipe','pipe']});
+const child=spawn(executable,['--disable-gpu'],{detached:true,stdio:['ignore','pipe','pipe']});
 let stderr='';child.stderr.on('data',data=>{stderr+=data.toString();});
 child.on('error',error=>{stderr+=error.message;});
 const url='http://127.0.0.1:5205';let socket;
+function stop(){
+  socket?.terminate();
+  // Electron helpers can retain inherited output pipes after the main process
+  // receives SIGTERM. This process group belongs only to this CI launch.
+  if(child.pid)try{process.kill(-child.pid,'SIGKILL');}catch{}
+  child.stdout?.destroy();child.stderr?.destroy();child.unref();
+}
+const watchdog=setTimeout(()=>{stop();console.error('Packaged startup check exceeded 45 seconds.');process.exit(1);},45000);
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 async function stateWhere(predicate){
   return new Promise((resolve,reject)=>{
@@ -42,7 +50,5 @@ try{
   await crouching;
   console.log('Packaged app startup, standalone catalog, Vandal demo, walk speed and crouch transport passed.');
 }finally{
-  socket?.terminate();
-  if(process.platform==='win32'&&child.pid)await new Promise(resolve=>execFile('taskkill',['/PID',String(child.pid),'/T','/F'],()=>resolve()));
-  else child.kill('SIGTERM');
+  clearTimeout(watchdog);stop();
 }
