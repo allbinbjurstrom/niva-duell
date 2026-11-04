@@ -26,7 +26,7 @@ export function attachShooter(httpServer,{catalog=loadCatalog(),engine=new Shoot
         const message=JSON.parse(raw.toString());
         if(!player){
           if(message.type!=='auth'||typeof message.token!=='string')throw new Error('Anslut till partyt igen.');
-          if(message.protocol!==RULES.protocolVersion){ws.close(1008,'Olika appversioner. Uppdatera båda till 0.2.3.');return;}
+          if(message.protocol!==RULES.protocolVersion){ws.close(1008,'Olika appversioner. Installera samma version på båda datorerna.');return;}
           player=engine.connect(message.token);clearTimeout(timeout);
           const previous=sockets.get(player.id);sockets.set(player.id,ws);previous?.close(4001,'Sessionen öppnades i en annan flik.');
           send(ws,engine.snapshot(player));return;

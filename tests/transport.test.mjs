@@ -24,6 +24,35 @@ test('HTTP create/join and authenticated WebSocket share a real party',async t=>
   const authA=read(wa,v=>v.type==='state'),authB=read(wb,v=>v.type==='state');wa.send(JSON.stringify({type:'auth',protocol:RULES.protocolVersion,token:a.token}));wb.send(JSON.stringify({type:'auth',protocol:RULES.protocolVersion,token:b.token}));
   const [sa,sb]=await Promise.all([authA,authB]);assert.equal(sa.party.code,sb.party.code);assert.equal(sa.party.members.length,2);assert.equal(sb.self.name,'Lina');assert.ok(!JSON.stringify(sb).includes(a.token));
   const err=read(wb,v=>v.type==='error');wb.send(JSON.stringify({type:'subject',section:'ORD'}));assert.match((await err).message,/värden/);
+  assert.equal(sa.party.freePlay,false);
+  const denied=read(wb,v=>v.type==='error');
+  wb.send(JSON.stringify({type:'free-play',enabled:true}));
+  assert.match((await denied).message,/värden/);
+
+  const mode=read(wb,v=>v.type==='state'&&v.party.freePlay);
+  wa.send(JSON.stringify({type:'free-play',enabled:true}));
+  await mode;
+  const buyA=read(wa,v=>v.type==='state'&&v.duel?.phase==='buy');
+  const buyB=read(wb,v=>v.type==='state'&&v.duel?.phase==='buy');
+  wa.send(JSON.stringify({type:'start'}));
+  for(const state of await Promise.all([buyA,buyB])){
+    assert.equal(state.party.phase,'matches');
+    assert.equal(state.self.question,null);
+  }
+  const locked=read(wa,v=>v.type==='error');
+  wa.send(JSON.stringify({type:'free-play',enabled:false}));
+  assert.match((await locked).message,/samlingsplatsen/);
+
+  const purchase=read(wb,v=>v.type==='state'&&v.self.weapon==='operator');
+  wb.send(JSON.stringify({type:'buy',weapon:'operator',armor:'heavy'}));
+  const equipped=await purchase;
+  assert.equal(equipped.self.armor,'heavy');
+  assert.equal(equipped.self.credits,sb.self.credits);
+
+  const countdown=read(wb,v=>v.type==='state'&&v.duel?.phase==='countdown');
+  wa.send(JSON.stringify({type:'ready'}));
+  wb.send(JSON.stringify({type:'ready'}));
+  assert.equal((await countdown).self.body.shield,50);
 });
 test('cross-origin writes, unknown parties, bad names and oversized requests are rejected',async t=>{
   const {url}=await server(t);assert.equal((await post(url,'/api/shooter/party',{name:'Albin'},'https://untrusted.example')).status,403);

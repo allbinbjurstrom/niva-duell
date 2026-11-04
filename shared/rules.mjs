@@ -1,6 +1,6 @@
 import {stanceDimensions,GAIT} from './movement.mjs';
 import {hitAgent} from './agent-hit.mjs';
-export const RULES=Object.freeze({protocolVersion:8,questions:5,baseCredits:800,correctCredits:900,maxPlayers:12,
+export const RULES=Object.freeze({protocolVersion:9,questions:5,baseCredits:800,correctCredits:900,maxPlayers:12,
   wins:3,buySeconds:45,roundSeconds:75,resultSeconds:4,waveSeconds:8,reconnectSeconds:30,
   tickRate:128,snapshotRate:64,radius:.32,height:1.8,crouchHeight:1.22,eye:1.62,crouchEye:1.03,gravity:18,jump:6.5,landPenalty:.225,tagSeconds:.35,tagSpeed:.275,walkSpeed:.6});
 export const SECTIONS={XYZ:'Matematisk problemlösning',KVA:'Kvantitativa jämförelser',NOG:'Kvantitativa resonemang',DTK:'Diagram, tabeller och kartor',ORD:'Ordförståelse','LÄS':'Svensk läsförståelse',MEK:'Meningskomplettering',ELF:'Engelsk läsförståelse'};

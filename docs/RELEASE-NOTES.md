@@ -1,21 +1,7 @@
-## Nivå Duell 0.2.5 — testversion
+## Nivå Duell 0.2.6
 
-Ladda ner rätt fil under **Assets**. Ingen Node-installation eller inloggning behövs.
+På samlingsplatsen väljer värden **Spelläge → Testläge · fritt vapenköp**. Alla går direkt till vapenköpet med obegränsade krediter för vapen och rustning. **Frågepass** är standard och ger utrustningsbudget utifrån svaren som tidigare.
 
-| Dator | Ladda ner |
-| --- | --- |
-| Mac med Apple-chip | **Niva-Duell-0.2.5-Mac-arm64.zip** |
-| Mac med Intel | **Niva-Duell-0.2.5-Mac-x64.zip** |
+Ladda ner **Niva-Duell-0.2.6-Mac-arm64.zip** för Mac med Apple-chip. Packa upp och dra **Niva Duell.app** till **Program**. Installera 0.2.6 på båda datorerna för att spela tillsammans på samma nätverk.
 
-På Mac packar du upp och flyttar appen till Program. Testversionen saknar köpta utgivarcertifikat, så operativsystemet kan visa en varning vid första öppningen. [Installationshjälp och kontroller](https://github.com/allbinbjurstrom/niva-duell#ladda-ner-och-testa).
-
-- **Vandal-demo** startar direkt med 25/50 skott, full rustning, träningsmål och 10 m skjutbana.
-- **Shift/Ctrl rättade:** modifikatortillstånd följer även tangent- och musflaggor när knappen redan hålls vid muslåsning eller en tangentövergång har missats.
-- **Rörelseindikator i demon** visar serverns faktiska läge och simulerade m/s.
-- **Apple-chip och Intel** får egna Mac-arkiv. Fönsterstorleken anpassas till skärmens arbetsyta.
-- **Testa själv** ger fem enkla platshållarfrågor. Vanliga partyn använder verifierade originalprov.
-- **F8** spelar in spelets bild och ljud. **Spara prov** sparar i Hämtade filer.
-
-Spela ensam eller med vänner **på samma Wi-Fi/Ethernet**. Värden skapar party och de andra ansluter i listan eller med lokal IP, port och partykod. Båda Mac-versionerna använder samma spelprotokoll. Denna release har ingen matchserver över internet.
-
-Vapen, grafik och ljud är egna förenklade approximationer. Inspelningsklipp ersätter inte mätning av faktisk FPS, latens eller exakt Valorant-känsla. Signerings- och fysiska spelprov begränsas enligt testreleasens README. `SHA256SUMS.txt` innehåller kontrollsummor för de nedladdningsbara apparna.
+Om macOS stoppar appen vid första öppningen finns instruktioner i [installationshjälpen](https://github.com/allbinbjurstrom/niva-duell#ladda-ner-och-testa).

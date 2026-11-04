@@ -25,7 +25,7 @@ export class ShooterEngine {
     requireValue(this.parties.size<128,'Servern har fullt just nu. Försök igen senare.');
     requireValue(testMode||this.catalog.sections.some(s=>s.id===section),'Välj ett ämne som finns i Nivå.');
     let code;do{code=Array.from({length:3},()=>String.fromCharCode(65+randomInt(26))).join('');}while(this.parties.has(code));
-    const party={code,hostId:null,section,testMode,phase:'lobby',players:[],questions:[],used:new Set(),schedule:[],waveIndex:-1,duels:[],waveEndsAt:0,lastActivity:this.now(),notice:''};
+    const party={code,hostId:null,section,testMode,freePlay:false,phase:'lobby',players:[],questions:[],used:new Set(),schedule:[],waveIndex:-1,duels:[],waveEndsAt:0,lastActivity:this.now(),notice:''};
     const player=this.addPlayer(party,name);party.hostId=player.id;this.parties.set(code,party);return this.credentials(player,party);
   }
   createTest(name='Testspelare'){
@@ -72,6 +72,11 @@ export class ShooterEngine {
       return;
     }
     if(message.type==='leave'){this.leave(p);return;}
+    if(message.type==='free-play'){
+      requireValue(!party.testMode&&p.id===party.hostId&&party.phase==='lobby','Bara värden kan ändra spelläge på samlingsplatsen.');
+      requireValue(typeof message.enabled==='boolean','Välj ett giltigt spelläge.');
+      party.freePlay=message.enabled;return;
+    }
     if(message.type==='subject'){
       requireValue(!party.testMode,'Solotestet använder bara testfrågor.');
       requireValue(p.id===party.hostId&&['lobby','finished'].includes(party.phase),'Bara värden kan välja ämne före spelstart.');
@@ -121,7 +126,7 @@ export class ShooterEngine {
       requireValue(duel.phase==='buy','Köptiden är avslutad.');
       const weapon=message.weapon??p.weapon,armor=message.armor??p.armor;
       requireValue(Object.hasOwn(WEAPONS,weapon)&&!WEAPONS[weapon].melee&&Object.hasOwn(ARMOR,armor),'Utrustningen finns inte.');
-      const price=WEAPONS[weapon].price+ARMOR[armor].price;requireValue(price<=p.budget,'Dina krediter räcker inte till den utrustningen.');
+      const price=party.freePlay?0:WEAPONS[weapon].price+ARMOR[armor].price;requireValue(price<=p.budget,'Dina krediter räcker inte till den utrustningen.');
       p.weapon=weapon;p.armor=armor;p.credits=p.budget-price;p.ready=false;return;
     }
     if(message.type==='ready'){
@@ -139,10 +144,11 @@ export class ShooterEngine {
     throw new Error('Kommandot stöds inte.');
   }
   startTraining(party){
-    party.questions=party.testMode?testQuestions():this.catalog.choose(party.section,RULES.questions,party.used);
+    party.questions=party.freePlay?[]:party.testMode?testQuestions():this.catalog.choose(party.section,RULES.questions,party.used);
     if(!party.testMode)for(const q of party.questions)party.used.add(q.id);
     party.phase='training';party.duels=[];party.schedule=[];party.waveIndex=-1;party.waveEndsAt=0;party.notice='';
-    for(const player of this.active(party))Object.assign(player,{answers:[],questionIndex:0,trainingComplete:player.bot,budget:budget(0),credits:budget(0),weapon:'classic',armor:'none',ready:false,body:null,stats:{wins:0,rounds:0,kills:0,deaths:0}});
+    for(const player of this.active(party))Object.assign(player,{answers:[],questionIndex:0,trainingComplete:player.bot||party.freePlay,budget:budget(0),credits:budget(0),weapon:'classic',armor:'none',ready:false,body:null,stats:{wins:0,rounds:0,kills:0,deaths:0}});
+    if(party.freePlay)this.checkTraining(party);
   }
   leave(p){
     const party=this.partyOf(p);
@@ -297,7 +303,7 @@ export class ShooterEngine {
     const confirmed=duel?.phase==='live'&&now-p.inputAt<=300?p.motion?.confirmed:null;
     const ownBody=confirmed&&p.body?{...confirmed,health:p.body.health,shield:p.body.shield}:p.body;
     const feedback=p.answers[p.questionIndex]??null;
-    return {type:'state',protocol:RULES.protocolVersion,now,party:{code:party.code,hostId:party.hostId,section:party.section,testMode:party.testMode,demoMode:party.demoMode??null,demoDrill:party.demoDrill??'target',demoTargetMoving:party.demoTargetMoving===true,phase:party.phase,wave:party.waveIndex+1,waves:party.schedule.length,waveEndsAt:party.waveEndsAt,notice:party.notice,
+    return {type:'state',protocol:RULES.protocolVersion,now,party:{code:party.code,hostId:party.hostId,section:party.section,testMode:party.testMode,freePlay:party.freePlay,demoMode:party.demoMode??null,demoDrill:party.demoDrill??'target',demoTargetMoving:party.demoTargetMoving===true,phase:party.phase,wave:party.waveIndex+1,waves:party.schedule.length,waveEndsAt:party.waveEndsAt,notice:party.notice,
       members:party.players.map(id=>this.players.get(id)).filter(Boolean).map(p=>({id:p.id,name:p.name,bot:p.bot,connected:p.connected,withdrawn:p.withdrawn,progress:p.answers.length,complete:p.trainingComplete,stats:p.stats})),
       matches:party.duels.map(d=>({id:d.id,players:d.players,score:d.score,phase:d.phase,winnerId:d.winnerId}))},
       self:{id:p.id,name:p.name,body:ownBody,previousBody:confirmed?p.motion.confirmedPrevious:p.body,motionEpoch:p.motion?.epoch??0,motionStale:p.motion?.needsResync??false,budget:p.budget,credits:p.credits,weapon:p.weapon,activeWeapon:ownWeapon.id,armor:p.armor,ready:p.ready,slot:p.slot??1,

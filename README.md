@@ -8,8 +8,8 @@ Ett fristående FPS-test för Mac, med enkel grafik, Vandal-demo och kunskapsdue
 
 | Dator | Fil |
 | --- | --- |
-| Mac med Apple-chip, M1 eller senare | `Niva-Duell-0.2.5-Mac-arm64.zip` |
-| Mac med Intel | `Niva-Duell-0.2.5-Mac-x64.zip` |
+| Mac med Apple-chip, M1 eller senare | `Niva-Duell-0.2.6-Mac-arm64.zip` |
+| Mac med Intel | `Niva-Duell-0.2.5-Mac-x64.zip` (spelar med andra på 0.2.5) |
 
 På Mac packar du upp ZIP-filen, drar **Niva Duell.app** till **Program** och öppnar den därifrån. Detta är en testrelease utan köpta utgivarcertifikat: macOS kan kräva **Systeminställningar → Integritet och säkerhet → Öppna ändå** vid första öppningen. Kontrollera att filen kommer från repot ovan.
 
@@ -20,6 +20,8 @@ Välj **Vandal-demo** för att börja direkt. Du får Vandal, 25/50 skott och fu
 1. Installera samma version på varje dator. Apple-chip och Intel kan spela tillsammans.
 2. Värden väljer **Skapa party** och ett delprov. Vännerna väljer **Anslut till party** och partyt i listan.
 3. Om partyt inte hittas: använd värdens lokala IP-adress, port och tre bokstäver långa partykod från samlingsplatsen.
+
+På samlingsplatsen kan värden välja **Testläge · fritt vapenköp** under **Spelläge**. Då går alla direkt till vapenköpet med obegränsade krediter. Välj **Frågepass** för det vanliga upplägget.
 
 Tillåt appen på det privata nätverket när datorns brandvägg eller nätverksdialog frågar. Värden håller appen öppen under hela spelet. Gästnätverk med klientisolering kan hindra anslutningen.
 
